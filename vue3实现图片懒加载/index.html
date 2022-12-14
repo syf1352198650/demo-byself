@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            height: 50vh;
+            display: block;
+            border: 1px solid #000;
+        }
+
+        #app {
+            height: 100vh;
+            overflow: auto;
+        }
+    </style>
+    <script src="https://lib.baomitu.com/vue/3.2.41/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <img v-for="i in [1,2,3,4,5]" :key="i" v-lazy="imgUrl" :alt="i">
+    </div>
+    <script src="./lazy.js"></script>
+    <script>
+        const vue3Composition = {
+            setup() {
+                const imgUrl = 'https://tse1-mm.cn.bing.net/th/id/OET.2a49905778304cb4a2a2e18c50a7a34c?w=135&h=272&c=7&rs=1&o=5&dpr=1.2&pid=1.9'
+                return {
+                    imgUrl
+                }
+            }
+        }
+
+        var vm = Vue.createApp(vue3Composition)
+        vm.use(lazyPlugin).mount('#app')
+    </script>
+</body>
+
+</html>
