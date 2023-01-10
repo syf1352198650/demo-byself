@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box{
+        width: 600px;
+        height: 600px;
+        margin: 0 auto;
+        background-color: pink;
+        background: url('./OET.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .box::before,.box::after{
+
+        content: '';
+        width: 50%;
+        height: 600px;
+        background-color: pink;
+        transition: .4s;
+    }
+    .box::after{
+        float: right;
+        background-color: purple;
+        background: url('./2.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .box::before{
+
+        float: left;
+        background-color: purple;
+        background: url('./1.jpg') no-repeat;
+        background-size: 100% 100%;
+    }
+    .box:hover::after{
+        transform: translate(100%);
+        
+    }
+    .box:hover::before{
+        float: left;
+        transform: translate(-100%);
+      
+    }
+</style>
+<body>
+    <div class="box"></div>
+</body>
+</html>
