@@ -4,24 +4,24 @@ const SUCCESS = "fulfilled"
 const FAILURE = "rejected"
 const PENDING = "pending"
 
-function resolvePromise(value, resolve, reject){
-    if (typeof value === 'function' || typeof value === "object") {
+function resolvePromise(value, resolve, reject) {
+    if (typeof value === "object") {
         try {
             let then = value.then;
             if (typeof then === 'function') {
-                then.call(value, x=>{
+                then.call(value, x => {
                     // resolve(x)
                     resolvePromise(x, resolve, reject); //递归
-                }, err=>{
+                }, err => {
                     reject(err)
                 })
-            }else{
+            } else {
                 resolve(value)
             }
-        }catch(e){
+        } catch (e) {
             reject(e)
         }
-    }else{
+    } else {
         resolve(value); //返回普通值
     }
 }
@@ -37,39 +37,46 @@ class Promise {
             if (this.status === PENDING) {//判断状态，状态只考研改变一次
                 this.status = SUCCESS;
                 this.value = value;
-                this.onFulfilledCallbacks.forEach(fn=>fn())//等到异步任务执行完后，然后resolve或者reject通知执行then中的回调函数
+                this.onFulfilledCallbacks.forEach(fn => fn())//等到异步任务执行完后，然后resolve或者reject通知执行then中的回调函数
             }
         }
         let reject = reason => {//判断状态，状态只考研改变一次
             if (this.status === PENDING) {
                 this.status = FAILURE;
                 this.reason = reason;
-                this.onRejectedCallbacks.forEach(fn=>fn())//等到异步任务执行完后，然后resolve或者reject通知执行then中的回调函数
+                this.onRejectedCallbacks.forEach(fn => fn())//等到异步任务执行完后，然后resolve或者reject通知执行then中的回调函数
             }
         }
         try {
             executor(resolve, reject);
-        }catch(e){
+        } catch (e) {
             reject(e)
         }
     }
-    then(onFulfilled, onRejected){ //成功回调  失败回调
-        let p = new Promise((resolve, reject)=>{
+    then(onFulfilled, onRejected) { //成功回调  失败回调
+        let p = new Promise((resolve, reject) => {//then方法返回的是promise，为了链式调用
+            //同步情况
             if (this.status === SUCCESS) {
+
                 let v = onFulfilled(this.value)
+
                 resolvePromise(v, resolve, reject)
             }
             if (this.status === FAILURE) {
                 let v = onRejected(this.reason)
+
                 resolvePromise(v, resolve, reject)
             }
+            // 异步情况
             if (this.status === PENDING) {
-                this.onFulfilledCallbacks.push(()=>{
+                this.onFulfilledCallbacks.push(() => {
                     let v = onFulfilled(this.value)
+
                     resolvePromise(v, resolve, reject)
                 })
-                this.onRejectedCallbacks.push(()=>{
+                this.onRejectedCallbacks.push(() => {
                     let v = onRejected(this.reason)
+
                     resolvePromise(v, resolve, reject)
                 })
             }

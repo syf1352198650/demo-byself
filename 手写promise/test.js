@@ -1,3 +1,4 @@
+
 let fs = require('fs')
 const { resolve } = require('path')
 // fs.readFile(__dirname+'/data/index.txt', (err, data)=>{
@@ -10,7 +11,8 @@ const { resolve } = require('path')
 //     })
 // })
 
-let Promise = require('./MyPromise')
+let Promise = require('./Promise')
+
 let p = new Promise((resolve, reject)=>{
     fs.readFile(__dirname+'/data/index.txt', (err, data)=>{
         // console.log(data.toString())
@@ -18,9 +20,7 @@ let p = new Promise((resolve, reject)=>{
         resolve(data.toString())
     })
 })
-// p.then(data=>{
-//     console.log(data)
-// })
+
 let p1 = p.then(data=>{
     // console.log(data)
     return new Promise((resolve, reject)=>{
