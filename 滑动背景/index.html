@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="phone">
+          <img
+            src="https://element.eleme.io/static/theme-index-blue.c38b733.png"
+           
+          />
+          <div class="jumbotron-red">
+            <img
+              src="https://element.eleme.io/static/theme-index-red.c8e136e.png"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        window.addEventListener("scroll",this.handleScroll)
+        function handleScroll() {
+            let scrollTop = window.scrollY;
+            let jumbotron = document.querySelector(".jumbotron-red");
+            jumbotron.style.height = scrollTop + "px"
+        }
+
+    </script>
+
+    <style>
+        .content {
+            height: 2000px;
+            width: 98vw;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+      img{
+        width: 100%;
+        height: 100%;
+      }
+        .phone {
+            position: relative;
+            height: 440px;
+            width: 740px;
+            margin: 80px auto;
+        }
+
+    .jumbotron-red {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 0;
+        overflow: hidden;
+    }       
+    
+    .jumbotron-red img {
+        width: 740px;
+        height: 440px;
+    }
+
+    </style>
+  </body>
+</html>
